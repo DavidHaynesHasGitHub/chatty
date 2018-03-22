@@ -5,30 +5,24 @@ export default class ChatBar extends React.Component {
     super(props);
     this.state = {inputValue: '', username: props.defaultValue}
   }
-
-   messageOnChange = (event) => {
-    this.setState({inputValue: event.target.value, username: this.state.username})
-  }
-   nameOnChange = (event) => {
-    this.setState({inputValue: this.state.inputValue, username: event.target.value})
-  }
-   onSubmit = (event) =>{
-    if(event.key === 'Enter'){
-      this.props.addMessage(this.state);
-      this.setState({inputValue:'', username: this.state.username})
+  render() {
+    const messageOnChange = (evt) => {
+      this.setState({inputValue: evt.target.value, username: this.state.username})
     }
-  }
-  render(){
+    const nameOnChange = (evt) => {
+      this.setState({inputValue: this.state.inputValue, username: evt.target.value})
+    }
+    const onSubmit = (evt) => {
+      if(evt.key === 'Enter') {
+        this.props.addMessage(this.state);
+        this.setState({inputValue: '', username: this.state.username})
+      }
+    }
     return (
-      <footer className="chatbar">
-        <input className="chatbar-username" placeholder="Your Name (Optional)" onChange={this.nameOnChange} value={this.state.userName}/>
-        <input
-          className="chatbar-message"
-          placeholder="Type a message and hit ENTER"
-          onChange={this.messageOnChange}
-          value={this.state.inputValue}
-          onKeyPress={this.onSubmit}/>
-      </footer>
+    <footer className="chatbar">
+        <input className="chatbar-username" placeholder="Your Name (Optional)" onChange={nameOnChange} value={this.state.username}/>
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={messageOnChange} value={this.state.inputValue} onKeyPress={onSubmit}/>
+    </footer>
     );
   }
 }
